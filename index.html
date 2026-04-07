@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="StreakUp — Build habits that stick. Available free on iOS and Android.">
+  <meta property="og:title" content="StreakUp — Build habits that stick.">
+  <meta property="og:description" content="Track your habits, build streaks, and achieve your goals. Available free on iOS and Android.">
+  <meta property="og:image" content="https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/b0/1d/1a/b01d1a5e-6a6a-7b5e-8b2e-4e6e6e6e6e6e/AppIcon-0-0-1x_U007emarketing-0-11-0-sRGB-85-220.png/350x350bb.png">
+  <title>StreakUp — Build habits that stick.</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0D0D0D;
+      --surface: #161616;
+      --border: #242424;
+      --accent: #6C63FF;
+      --accent-glow: rgba(108, 99, 255, 0.18);
+      --text-primary: #F5F5F7;
+      --text-secondary: #8E8E93;
+      --text-muted: #636366;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .redirect-bar {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--accent);
+      color: #fff;
+      text-align: center;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      z-index: 100;
+    }
+
+    .container {
+      max-width: 420px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* Icon area */
+    .icon-wrap {
+      width: 120px;
+      height: 120px;
+      border-radius: 28px;
+      background: linear-gradient(145deg, #1A1744, #2D2880);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 60px;
+      box-shadow:
+        0 0 0 1px rgba(108, 99, 255, 0.25),
+        0 20px 60px rgba(108, 99, 255, 0.22),
+        0 4px 16px rgba(0, 0, 0, 0.6);
+      margin-bottom: 36px;
+      user-select: none;
+    }
+
+    /* Heading */
+    h1 {
+      font-size: 42px;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+      text-align: center;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    /* Tagline */
+    .tagline {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-align: center;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .subline {
+      font-size: 15px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    /* Store buttons */
+    .store-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    .store-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 24px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+    }
+
+    .store-btn:hover {
+      background: #1E1E1E;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent), 0 4px 24px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    .store-btn:active {
+      transform: translateY(0);
+    }
+
+    .store-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .store-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .store-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 500;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+
+    .store-name {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 60px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Subtle glow behind container */
+    .glow-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(108,99,255,0.06) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 34px;
+      }
+      .tagline {
+        font-size: 18px;
+      }
+      .icon-wrap {
+        width: 100px;
+        height: 100px;
+        border-radius: 24px;
+        font-size: 50px;
+        margin-bottom: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-bg"></div>
+
+  <div class="redirect-bar" id="redirectBar">
+    Redirecting you to the <span id="storeName">App Store</span>&hellip;
+  </div>
+
+  <div class="container">
+    <div class="icon-wrap" role="img" aria-label="StreakUp app icon">🔥</div>
+
+    <h1>StreakUp</h1>
+    <p class="tagline">Build habits that stick.</p>
+    <p class="subline">Available free on iOS and Android.</p>
+
+    <div class="store-buttons">
+      <a class="store-btn" href="https://apps.apple.com/us/app/streakup-habit-tracker-goals/id6760596379" id="iosBtn" aria-label="Download on the App Store">
+        <!-- Apple logo SVG -->
+        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div class="store-text">
+          <span class="store-label">Download on the</span>
+          <span class="store-name">App Store</span>
+        </div>
+      </a>
+
+      <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.AlexanderCH.habitracker2026" id="androidBtn" aria-label="Get it on Google Play">
+        <!-- Google Play logo SVG -->
+        <svg class="store-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3.18 23.76c.3.18.65.27 1.01.23l.1-.03L13.88 14 10 10.12 3.18 23.76zm16.7-10.93L17.4 11.6 13.07 16l4.36 4.36 2.44-1.37a2.1 2.1 0 0 0 0-3.66v-.1zM2.15 1.03a2.02 2.02 0 0 0-.15.77v20.4c0 .27.05.53.15.77L10 14 2.15 1.03zm8.1 8.94L19 1.3A2.08 2.08 0 0 0 17.83.97c-.36 0-.73.1-1.05.3L4.22 8.46 10.25 9.97z"/>
+        </svg>
+        <div class="store-text">
+          <span class="store-label">Get it on</span>
+          <span class="store-name">Google Play</span>
+        </div>
+      </a>
+    </div>
+
+    <p class="footer">StreakUp &copy; 2026. Free to download.</p>
+  </div>
+
+  <script>
+    (function () {
+      var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      var android = /Android/i.test(navigator.userAgent);
+
+      if (ios || android) {
+        var bar = document.getElementById('redirectBar');
+        var label = document.getElementById('storeName');
+        var url = ios
+          ? 'https://apps.apple.com/us/app/streakup-habit-tracker-goals/id6760596379'
+          : 'https://play.google.com/store/apps/details?id=com.AlexanderCH.habitracker2026';
+
+        label.textContent = ios ? 'App Store' : 'Play Store';
+        bar.style.display = 'block';
+
+        setTimeout(function () {
+          window.location.href = url;
+        }, 1000);
+      }
+    })();
+  </script>
+</body>
+</html>
