@@ -314,7 +314,15 @@
         if (attribution.toString()) {
           // Play exposes this encoded campaign payload through Install Referrer
           // and reports campaign dimensions in Play Console acquisition reports.
-          url.searchParams.set('referrer', attribution.toString());
+          var playAttribution = new URLSearchParams(attribution);
+          var campaign = playAttribution.get('utm_campaign');
+          var content = playAttribution.get('utm_content');
+          if (campaign && content) {
+            // Play Console reports campaign more directly than content, so give
+            // every Nyven surface its own visible acquisition bucket.
+            playAttribution.set('utm_campaign', (campaign + '_' + content).slice(0, 100));
+          }
+          url.searchParams.set('referrer', playAttribution.toString());
         }
         return url.toString();
       }

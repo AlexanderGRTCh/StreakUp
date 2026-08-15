@@ -24,6 +24,6 @@ Example:
 
 `https://alexandergrtch.github.io/StreakUp/?utm_source=youtube&utm_medium=organic&utm_campaign=nyven&utm_content=the_blue_archive`
 
-Android receives the values in Google Play's `referrer` parameter. iOS receives a compact `ct` campaign token; add the App Store Connect provider token to `appleProviderToken` in `index.html` to activate full Apple campaign-link reporting.
+Android receives the values in Google Play's `referrer` parameter. When both campaign and content are present, the redirect combines them into a Play-visible campaign such as `nyven_the_blue_archive` while retaining the original content field. iOS receives a compact `ct` campaign token; add the App Store Connect provider token to `appleProviderToken` in `index.html` to activate full Apple campaign-link reporting.
 
 By [Alexander Kemos](https://github.com/AlexanderGRTCh), Ktisis Arc, Vancouver BC.
