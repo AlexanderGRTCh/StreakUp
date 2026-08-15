@@ -10,4 +10,20 @@ Habit tracker for building streaks on real goals: daily or weekly schedules, che
 
 Built with Flutter. The app source is private; this repo hosts the landing page ([index.html](index.html)).
 
+## Campaign attribution
+
+The landing page preserves this allowlisted campaign data when it redirects visitors to a store:
+
+- `utm_source`
+- `utm_medium`
+- `utm_campaign`
+- `utm_content`
+- `utm_term`
+
+Example:
+
+`https://alexandergrtch.github.io/StreakUp/?utm_source=youtube&utm_medium=organic&utm_campaign=nyven&utm_content=the_blue_archive`
+
+Android receives the values in Google Play's `referrer` parameter. iOS receives a compact `ct` campaign token; add the App Store Connect provider token to `appleProviderToken` in `index.html` to activate full Apple campaign-link reporting.
+
 By [Alexander Kemos](https://github.com/AlexanderGRTCh), Ktisis Arc, Vancouver BC.

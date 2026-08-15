@@ -267,15 +267,70 @@
 
   <script>
     (function () {
+      var attributionKeys = [
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
+        'utm_content',
+        'utm_term'
+      ];
+      var incoming = new URLSearchParams(window.location.search);
+      var attribution = new URLSearchParams();
+
+      attributionKeys.forEach(function (key) {
+        var value = incoming.get(key);
+        if (value) {
+          attribution.set(key, value.slice(0, 100));
+        }
+      });
+
+      function compactCampaignName() {
+        var source = attribution.get('utm_source') || 'web';
+        var content = attribution.get('utm_content') || attribution.get('utm_campaign') || 'landing';
+        return (source + '_' + content)
+          .toLowerCase()
+          .replace(/[^a-z0-9_-]+/g, '_')
+          .replace(/^_+|_+$/g, '')
+          .slice(0, 100);
+      }
+
+      function buildIosUrl() {
+        var url = new URL('https://apps.apple.com/us/app/streakup-habit-tracker-goals/id6760596379');
+        if (attribution.toString()) {
+          // Apple campaign links also accept a provider token (pt). Add it here
+          // when the App Store Connect provider token is available.
+          var appleProviderToken = '';
+          if (appleProviderToken) {
+            url.searchParams.set('pt', appleProviderToken);
+          }
+          url.searchParams.set('ct', compactCampaignName());
+          url.searchParams.set('mt', '8');
+        }
+        return url.toString();
+      }
+
+      function buildAndroidUrl() {
+        var url = new URL('https://play.google.com/store/apps/details?id=com.AlexanderCH.habitracker2026');
+        if (attribution.toString()) {
+          // Play exposes this encoded campaign payload through Install Referrer
+          // and reports campaign dimensions in Play Console acquisition reports.
+          url.searchParams.set('referrer', attribution.toString());
+        }
+        return url.toString();
+      }
+
+      var iosUrl = buildIosUrl();
+      var androidUrl = buildAndroidUrl();
+      document.getElementById('iosBtn').href = iosUrl;
+      document.getElementById('androidBtn').href = androidUrl;
+
       var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
       var android = /Android/i.test(navigator.userAgent);
 
       if (ios || android) {
         var bar = document.getElementById('redirectBar');
         var label = document.getElementById('storeName');
-        var url = ios
-          ? 'https://apps.apple.com/us/app/streakup-habit-tracker-goals/id6760596379'
-          : 'https://play.google.com/store/apps/details?id=com.AlexanderCH.habitracker2026';
+        var url = ios ? iosUrl : androidUrl;
 
         label.textContent = ios ? 'App Store' : 'Play Store';
         bar.style.display = 'block';
